@@ -1,93 +1,107 @@
-<div class= "container app">
+<div class="container app">
   <div class="row">
-      <div class="col-sm-8">
-        <h1 class= "text-center">{{title}}</h1>
+    <div class="col-sm-8">
+      <h1 class="text-center">{{ title }}</h1>
+    </div>
+    <div class="col-sm-4">
+      <div class="alert alert-success alert-dismissable" *ngIf="msg">
+        <a href="#" class="close" (click)="closeAlert()"> &times; </a> {{ msg }}
       </div>
-      <div class= "col-sm-4">
-        <div Class= "alert alert-success alert-dismissable" *ngIf="msg">
-           <a href="#" class= "close"  (click)="closeAlert()">
-             &times;
-           </a>
-           {{msg}}
-        </div>
-        <div Class= "alert alert-danger alert-dismissable" *ngIf="msgerr">
-            <a href="#" class= "close"  (click)="closeAlert()">
-              &times;
-            </a>
-            {{msgerr}}
-         </div>
+      <div class="alert alert-danger alert-dismissable" *ngIf="msgerr">
+        <a href="#" class="close" (click)="closeAlert()"> &times; </a>
+        {{ msgerr }}
       </div>
+    </div>
   </div>
   <div class="row">
-      <div class="col-sm-6"></div>
-      <div class="col-sm-6">
-          <form class="form-inline">
-              <div class="form-group" >
-                  <label for="name" class="control-label col-sm-2">
-                    Name:
-                  </label>
-                  <div class="col-sm-4 ">
-                    <input type="text" class="form-control" id="name" name="name" [(ngModel)]="model.name" placeholder="Equipo">
-                  </div>
-              </div>
-              <div class="form-group" >
-                <div class="col-sm-2">
-                    <button type="submit" class= "btn btn-success" (click)="addTeam()">
-                      Add
-                    </button>
-                </div>
-                
-              </div>
-          </form>
-      </div>
+    <div class="col-sm-6"></div>
+    <div class="col-sm-6">
+      <form class="form-inline">
+        <div class="form-group">
+          <label for="name" class="control-label col-sm-2"> Name: </label>
+          <div class="col-sm-4 ">
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              name="name"
+              [(ngModel)]="model.name"
+              placeholder="Team"
+            />
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-2">
+            <button type="submit" class="btn btn-success" (click)="addTeam()">
+              Add
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
   <div class="row">
     <div class="col-sm-9">
-      
       <div class="row">
-        <h2 class="col-sm-6">Matches  <button class="btn btn-info" *ngIf=" teams.length%2==0 && teams.length >=4  " (click)="Generate()" > <span class="glyphicon glyphicon-cog glyph"></span> Generate </button></h2>
+        <h2 class="col-sm-6">
+          Matches
+          <button
+            class="btn btn-info"
+            *ngIf="teams.length % 2 == 0 && teams.length >= 4"
+            (click)="Generate()"
+          >
+            <span class="glyphicon glyphicon-cog glyph"></span> Generate
+          </button>
+        </h2>
       </div>
       <div class="row">
-          
-          <table class="table table-striped" >
-            <thead>
-              <tr>
-                <th scope="col">Ronda </th>
-                <th scope="col">Local</th>
-                <th scope="col">Visitor</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let matche of matches let i = index" >
-
-                <th scope="row">{{matche.round}}</th>
-                <th >{{matche.local.name}}</th>
-                
-                <th>{{matche.visitor.name}}</th>
-              </tr>
-            </tbody>
-
-          </table>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Round</th>
+              <th scope="col">Local</th>
+              <th scope="col">Visitor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let matche of matches; let i = index">
+              <th scope="row">{{ matche.round }}</th>
+              <th>{{ matche.local.name }}</th>
+              <th>{{ matche.visitor.name }}</th>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
     <div class="col-sm-3">
-     
-        <div class="col-sm-2 row">
-          
-        </div>
-        <div class="row">
-          <ul class="list-group">
-            <li class="list-group-item" ><h4 class="col-sm-1">  Teams</h4>  <button type="button" class="btn btn-danger" style="margin-left: 100px" title='Delete team selected' (click)="deleteTeam()"><span class="glyphicon glyphicon-trash glyph"></span></button></li>
-            <li class="list-group-item list-group-item-action "  *ngFor="let team of teams; let i = index"  (click)="selectedForDelete(i)">
-               {{team.name}}
-            </li>
-          </ul>
-        </div>
-        
-          
-
-    </div>   
+      <div class="col-sm-2 row"></div>
+      <div class="row">
+        <ul class="list-group">
+          <li class="list-group-item">
+            <h4 class="col-sm-1">Teams</h4>
+            <button
+              type="button"
+              class="btn btn-danger"
+              style="margin-left: 100px"
+              title="Delete team selected"
+              (click)="deleteTeam()"
+            >
+              <span class="glyphicon glyphicon-trash glyph"></span>
+            </button>
+          </li>
+          <li
+            [className]="
+              clicked[i]
+                ? ' list-group-item list-group-item-action active'
+                : 'list-group-item list-group-item-action inactive'
+            "
+            *ngFor="let team of teams; let i = index"
+            (click)="selectedForDelete(i)"
+          >
+            {{ team.name }}
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
-  
 </div>
-  
