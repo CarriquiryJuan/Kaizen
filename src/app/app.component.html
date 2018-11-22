@@ -54,16 +54,16 @@
               <tr>
                 <th scope="col">Ronda </th>
                 <th scope="col">Local</th>
-                <th scope="col">Visitante</th>
+                <th scope="col">Visitor</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let matche of matches let i = index" >
 
-                <th scope="row">{{(((teams.length-1)-i)%4)}}</th>
+                <th scope="row">{{matche.round}}</th>
                 <th >{{matche.local.name}}</th>
                 
-                <th>{{matche.visitante.name}}</th>
+                <th>{{matche.visitor.name}}</th>
               </tr>
             </tbody>
 

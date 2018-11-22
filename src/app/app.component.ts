@@ -85,7 +85,7 @@ export class AppComponent {
 
   Generate():void{
     var sizeTeams = this.teams.length;
-
+    this.matches = [];
     if ((sizeTeams % 2)!=0){
       //cantidad impar 
       this.closeAlert();
@@ -99,20 +99,12 @@ export class AppComponent {
       for (var i:number=0 ; i<countMatches;i++){
         if ((i%modIf)==0){
           if ((i%2)==0){
-            this.matches[i]={"local":this.teams[i%(sizeTeams-1)],"visitante":this.teams[sizeTeams-1]}
-            this.matchesLocal[i]=this.teams[i%(sizeTeams-1)];
-            this.matchesVisitante[i]=this.teams[sizeTeams-1] ; 
+            this.matches[i]={"local":this.teams[i%(sizeTeams-1)],"visitor":this.teams[sizeTeams-1],"round":"0"}
           }else{
-            
-            this.matches[i]={"local":this.teams[sizeTeams-1],"visitante":this.teams[i%(sizeTeams-1)]}
-            this.matchesLocal[i]=this.teams[sizeTeams-1];
-            this.matchesVisitante[i]=this.teams[i%(sizeTeams-1)] ;
+            this.matches[i]={"local":this.teams[sizeTeams-1],"visitor":this.teams[i%(sizeTeams-1)],"round":"0"}
           }
         }else{
-          
-          this.matches[i]={"local":this.teams[i%(sizeTeams-1)],"visitante":this.teams[reveseindex]}
-          this.matchesLocal[i]=this.teams[i%(sizeTeams-1)];
-          this.matchesVisitante[i]=this.teams[reveseindex];
+          this.matches[i]={"local":this.teams[i%(sizeTeams-1)],"visitor":this.teams[reveseindex] ,"round":"0"}
           reveseindex--;
           if (reveseindex<0){
             reveseindex = sizeTeams-2
@@ -123,7 +115,8 @@ export class AppComponent {
       for (var i:number=0 ; i<countRound;i++){
         console.log("Ronda: "+i);
         for (var j:number =0 ; j<countMatchForRound;j++){
-          console.log(this.matches[countMatchesForPrint].local.name +" vs "+this.matches[countMatchesForPrint].visitante.name);
+          this.matches[countMatchesForPrint].round = i;
+          console.log(this.matches[countMatchesForPrint].local.name +" vs "+this.matches[countMatchesForPrint].visitor.name);
           countMatchesForPrint++;
         }
       }
