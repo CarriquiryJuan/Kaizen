@@ -7,48 +7,26 @@ import { Component } from "@angular/core";
 })
 export class AppComponent {
   title: string = "Generator of groups";
-  teams = [
-    { name: "Peñarol" },
-    { name: "Nacional" },
-    { name: "Racing" },
-    { name: "Danubio" },
-    { name: "River" },
-    { name: "Defensor" },
-    { name: "Cerro" },
-    { name: "Liverpool" }
-  ];
+  teams = [];
   matchesLocal = [];
   matches = [];
   matchesVisitante = [];
   msg: string = "";
   msgerr: string = "";
-  hideGenerate: boolean = true;
   selForDelete: number = -1;
+  clicked: boolean[] = [];
+
+  Rounds = [];
 
   model: any = {};
 
   addTeam(): void {
-    //ver que no sea vacio
     if (this.teams.length < 20) {
-      //si no estoy en el maximo
-      // ver que no sea vacio
-
-      //ver que no este
-
-      // noEsta:Boolean ={false};
-      //if(noEsta){
-
+      //faltan validaciones de que no sea vacio o que no repita equipos
       this.teams.push(this.model);
       this.model = {};
       this.closeAlert();
       this.msg = "Team added";
-      //]else{
-      //Error
-      //};
-      if (this.teams.length == 4) {
-        //mostar boton generar
-        this.hideGenerate = false;
-      }
     } else {
       //error supera cantidad maxima
       this.closeAlert();
@@ -58,32 +36,22 @@ export class AppComponent {
   }
 
   deleteTeam(): void {
-    console.log(this.selForDelete);
-    console.log("Voy a borrar " + this.selForDelete);
     if (this.selForDelete >= 0) {
       this.teams.splice(this.selForDelete, 1);
+      this.clicked[this.selForDelete] = false;
       this.selForDelete = -1;
-      if (this.teams.length < 4) {
-        this.hideGenerate = true;
-      }
     } else {
       this.closeAlert();
       this.msgerr = "Error: not selected for delete";
     }
   }
 
-  clicked: boolean[] = [];
-
   selectedForDelete(i): void {
     for (var p: number = 0; p < this.teams.length; p++) {
       this.clicked[p] = false;
     }
-
     this.selForDelete = i;
     this.clicked[i] = true;
-    console.log("Voy a marcar " + i);
-
-    //ver como pintar la linea seleccionada
   }
 
   Generate(): void {
@@ -126,18 +94,27 @@ export class AppComponent {
           }
         }
       }
+      //Acomodo en un arreglo para mostrar
       var countMatchesForPrint: number = 0;
+      var auxMatch = [];
       for (var i: number = 0; i < countRound; i++) {
+        var auxMatchsRound = [];
         for (var j: number = 0; j < countMatchForRound; j++) {
           if (i == 0) {
+            // La primer fecha se gurda aparte para luego poner al final
             this.matches[countMatchesForPrint].round = countRound;
+            auxMatch[j] = this.matches[countMatchesForPrint];
+            this.matches.splice(0, 1);
           } else {
             this.matches[countMatchesForPrint].round = i;
+            auxMatchsRound[j] = this.matches[countMatchesForPrint];
+            countMatchesForPrint++;
           }
-
-          countMatchesForPrint++;
         }
+        this.Rounds.push(auxMatchsRound);
       }
+      this.Rounds.push(auxMatch);
+      this.Rounds.splice(0, 1);
     }
   }
 

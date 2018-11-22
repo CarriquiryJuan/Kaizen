@@ -13,20 +13,21 @@
       </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col-sm-6"></div>
-    <div class="col-sm-6">
-      <form class="form-inline">
+  <div
+    class="row"
+    style="padding-bottom: 12px; border-bottom: 1px solid #cccccc; margin-bottom: 12px"
+  >
+    <div class="col-sm-12">
+      <form class="form-inline pull-right">
         <div class="form-group">
-          <label for="name" class="control-label col-sm-2"> Name: </label>
-          <div class="col-sm-4 ">
+          <div class="col-sm-4">
             <input
               type="text"
               class="form-control"
               id="name"
               name="name"
               [(ngModel)]="model.name"
-              placeholder="Team"
+              placeholder="Team name"
             />
           </div>
         </div>
@@ -55,21 +56,28 @@
         </h2>
       </div>
       <div class="row">
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th scope="col">Round</th>
-              <th scope="col">Local</th>
-              <th scope="col">Visitor</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let matche of matches; let i = index">
-              <th scope="row">{{ matche.round }}</th>
-              <th>{{ matche.local.name }}</th>
-              <th>{{ matche.visitor.name }}</th>
-            </tr>
-          </tbody>
+        <table class="table">
+          <tr *ngFor="let mat of Rounds; let i = index">
+            <td>
+              <h4>Round {{ mat[0].round }}:</h4>
+            </td>
+            <td>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Local</th>
+                    <th scope="col">Visitor</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let m of mat">
+                    <td>{{ m.local.name }}</td>
+                    <td>{{ m.visitor.name }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
         </table>
       </div>
     </div>
