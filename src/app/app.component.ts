@@ -22,13 +22,13 @@ export class AppComponent {
 
   addTeam(): void {
     if (this.teams.length < 20) {
-      //faltan validaciones de que no sea vacio o que no repita equipos
+      //missing validations that are not empty or that do not repeat equipment
       this.teams.push(this.model);
       this.model = {};
       this.closeAlert();
       this.msg = "Team added";
     } else {
-      //error supera cantidad maxima
+      //error exceeds maximum amount
       this.closeAlert();
       this.msgerr = "Error: exceeds maximum amount";
       this.model = {};
@@ -47,7 +47,7 @@ export class AppComponent {
   }
 
   selectedForDelete(i): void {
-    for (var p: number = 0; p < this.teams.length; p++) {
+    for (let p: number = 0; p < this.teams.length; p++) {
       this.clicked[p] = false;
     }
     this.selForDelete = i;
@@ -55,19 +55,20 @@ export class AppComponent {
   }
 
   Generate(): void {
-    var sizeTeams = this.teams.length;
+    let sizeTeams = this.teams.length;
     this.matches = [];
+    this.Rounds = [];
     if (sizeTeams % 2 != 0) {
-      //cantidad impar
+      //odd amount
       this.closeAlert();
       this.msgerr = "Error: the amount of equipment is odd";
     } else {
-      var countRound: number = sizeTeams - 1;
-      var countMatches: number = (sizeTeams * countRound) / 2;
-      var countMatchForRound: number = countMatches / countRound;
-      var modIf = sizeTeams / 2;
-      var reveseindex = sizeTeams - 2;
-      for (var i: number = 0; i < countMatches; i++) {
+      let countRound: number = sizeTeams - 1;
+      let countMatches: number = (sizeTeams * countRound) / 2;
+      let countMatchForRound: number = countMatches / countRound;
+      let modIf = sizeTeams / 2;
+      let reveseindex = sizeTeams - 2;
+      for (let i: number = 0; i < countMatches; i++) {
         if (i % modIf == 0) {
           if (i % 2 == 0) {
             this.matches[i] = {
@@ -94,14 +95,14 @@ export class AppComponent {
           }
         }
       }
-      //Acomodo en un arreglo para mostrar
-      var countMatchesForPrint: number = 0;
-      var auxMatch = [];
-      for (var i: number = 0; i < countRound; i++) {
-        var auxMatchsRound = [];
-        for (var j: number = 0; j < countMatchForRound; j++) {
+      //sort in a array for display
+      let countMatchesForPrint: number = 0;
+      let auxMatch = [];
+      for (let i: number = 0; i < countRound; i++) {
+        let auxMatchsRound = [];
+        for (let j: number = 0; j < countMatchForRound; j++) {
           if (i == 0) {
-            // La primer fecha se gurda aparte para luego poner al final
+            //the first round is saved separately and then put at the end
             this.matches[countMatchesForPrint].round = countRound;
             auxMatch[j] = this.matches[countMatchesForPrint];
             this.matches.splice(0, 1);
